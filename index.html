@@ -14,7 +14,7 @@
 <meta name="theme-color" content="#0B1A3F">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter+Tight:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
 <link rel="preload" as="image" href="./noche-v.jpg">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -25,7 +25,7 @@ html{scroll-behavior:smooth;}
   --bg:#F2F6FF; --surface:#D3E2FF; --ice:#CBF0FF; --sky:#74A7FF; --steel:#4A7BB7; --sapphire:#1E3A8A; --night:#0B1A3F;
   --ink:#14245A; --ink-soft:#33457A; --silver:#C0C0C0; --gun:#8E9091; --metal:#7D96B8; --hair:rgba(30,58,138,.18);
   --on-dark:#EEF3FF; --on-dark-soft:#C9D6F2;
-  --script:'Great Vibes',cursive; --caps:'Cinzel',serif; --serif:'Cormorant Garamond',Georgia,serif; --sans:'Inter Tight',system-ui,sans-serif;
+  --script:'Great Vibes',cursive; --caps:'Cinzel',serif; --serif:'Cormorant Garamond',Georgia,serif; --sans:'Cormorant Garamond',Georgia,serif;
   /* Foil en fondo claro: el pico llega al acero, nunca a blanco */
   --foil:linear-gradient(100deg,#13265f 0%,#2c5596 26%,#6f8db8 50%,#2c5596 74%,#13265f 100%);
   /* Foil en fondo oscuro: plata con pico casi blanco */
@@ -179,7 +179,11 @@ section,footer{position:relative;isolation:isolate;padding:84px 24px;}
 .c-item{position:relative;display:grid;grid-template-columns:1fr 56px 1fr;align-items:center;margin:0 0 34px;}
 .c-item:last-child{margin-bottom:0;}
 .c-star{grid-column:2;width:56px;height:56px;justify-self:center;color:#E9EEF6;filter:drop-shadow(0 0 10px rgba(210,225,255,.65));}
-.c-star svg{width:100%;height:100%;animation:twinkle 3.2s ease-in-out infinite;}
+.c-star{position:relative;}
+.c-star svg{position:relative;width:100%;height:100%;animation:twinkle 3.2s ease-in-out infinite;}
+.c-flash{position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-60px 0 0 -60px;border-radius:50%;pointer-events:none;opacity:0;background:radial-gradient(circle,rgba(255,255,255,.95) 0%,rgba(214,226,255,.55) 22%,rgba(160,190,240,0) 62%);}
+.c-flash::before,.c-flash::after{content:"";position:absolute;left:50%;top:50%;width:150px;height:2px;margin:-1px 0 0 -75px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);}
+.c-flash::after{transform:rotate(90deg);}
 .c-item:nth-child(odd) .c-star svg{animation-delay:-1.6s;}
 @keyframes twinkle{0%,100%{transform:scale(1) rotate(0)}50%{transform:scale(.86) rotate(8deg)}}
 .c-txt{padding:0 12px;}
@@ -214,16 +218,26 @@ footer .fd{font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing
 .credit{margin-top:26px;font-family:var(--sans);font-weight:500;font-size:13px;color:var(--on-dark-soft);}
 .credit a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4);}
 
-/* ── MÚSICA ── */
-.music-fab{position:fixed;right:16px;bottom:calc(86px + env(safe-area-inset-bottom));z-index:940;width:52px;height:52px;border-radius:50%;border:1px solid rgba(255,255,255,.5);cursor:pointer;background:linear-gradient(135deg,#2c5596,#13265f);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(11,26,63,.45);opacity:0;pointer-events:none;transition:opacity .6s;}
+/* ── VINILO ── */
+.music-fab{position:fixed;right:16px;bottom:calc(86px + env(safe-area-inset-bottom));z-index:940;width:60px;height:60px;padding:0;border:none;background:transparent;cursor:pointer;
+  border-radius:50%;filter:drop-shadow(0 6px 18px rgba(11,26,63,.55));opacity:0;pointer-events:none;transition:opacity .6s,transform .3s;}
 .music-fab.on{opacity:1;pointer-events:auto;}
-.music-fab svg{width:22px;height:22px;}
-.music-fab .bars{display:none;gap:3px;align-items:flex-end;height:18px;}
-.music-fab .bars i{width:3px;background:#fff;border-radius:2px;animation:bar 1s ease-in-out infinite;}
-.music-fab .bars i:nth-child(2){animation-delay:.2s}.music-fab .bars i:nth-child(3){animation-delay:.4s}
-@keyframes bar{0%,100%{height:5px}50%{height:18px}}
-.music-fab.playing .bars{display:flex;}.music-fab.playing svg{display:none;}
-@media (min-width:1024px){.music-fab{bottom:24px;}.hero-content{padding-bottom:150px}.hero-scroll{bottom:40px}}
+.music-fab:active{transform:scale(.92);}
+.music-fab::before{content:'';position:absolute;inset:-6px;border-radius:50%;border:1.5px solid rgba(192,192,192,.7);opacity:0;pointer-events:none;transition:opacity .35s;}
+.music-fab.playing::before{opacity:1;animation:vinylRing 2.4s ease-out infinite;}
+@keyframes vinylRing{0%{box-shadow:0 0 0 0 rgba(210,222,240,.5)}65%{box-shadow:0 0 0 14px rgba(210,222,240,0)}100%{box-shadow:0 0 0 0 rgba(210,222,240,0)}}
+.vinyl{display:block;width:60px;height:60px;border-radius:50%;position:relative;overflow:hidden;
+  background:radial-gradient(circle at 30% 28%,rgba(255,255,255,.14) 0%,transparent 45%),
+    repeating-radial-gradient(circle at 50% 50%,#0E1A3C 0 2.6px,rgba(255,255,255,.07) 2.6px 3.1px),#0E1A3C;
+  animation:vinylSpin 3.8s linear infinite paused;}
+.music-fab.playing .vinyl{animation-play-state:running;}
+@keyframes vinylSpin{to{transform:rotate(360deg)}}
+.vinyl-label{position:absolute;top:50%;left:50%;width:24px;height:24px;margin:-12px 0 0 -12px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 38% 35%,rgba(255,255,255,.35) 0%,transparent 55%),conic-gradient(from 0deg,#8E9091,#C0C0C0 18%,#FBFCFF 36%,#C0C0C0 54%,#8E9091 72%,#C0C0C0 90%,#FBFCFF,#8E9091);
+  box-shadow:0 0 0 1.5px rgba(192,192,192,.6),inset 0 1px 3px rgba(255,255,255,.3);}
+.vinyl-hole{width:6px;height:6px;border-radius:50%;background:#0B1A3F;box-shadow:inset 0 1px 2px rgba(0,0,0,.8);}
+@media (min-width:1024px){.music-fab{bottom:24px;}}
+@media (min-width:1024px){.hero-content{padding-bottom:150px}.hero-scroll{bottom:40px}}
 
 /* ── MENÚ FLOTANTE ── */
 #navPill{position:fixed;left:50%;z-index:950;display:flex;align-items:center;gap:6px;padding:7px 8px;border-radius:999px;background:rgba(242,246,255,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid var(--hair);box-shadow:0 18px 40px rgba(11,26,63,.22);opacity:0;pointer-events:none;transform:translate(-50%,40px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1);}
@@ -433,6 +447,49 @@ footer .fd{font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing
 .blk-sec{padding:84px 24px;}
 
 
+/* tiara que flota con destellos */
+.tiara-wrap{position:relative;display:block;width:84px;margin:0 auto 16px;}
+.tiara-wrap .intro-tiara{margin:0;transform-origin:50% 100%;animation:tiaraFloat 5.5s ease-in-out infinite;}
+@keyframes tiaraFloat{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-6px) rotate(2deg)}}
+.tw-spark{position:absolute;width:14px;height:14px;pointer-events:none;opacity:0;animation:sparkTw 2.8s ease-in-out infinite;
+  background:radial-gradient(circle,#fff 0 18%,transparent 20%),linear-gradient(90deg,transparent 42%,#9fb7dd 50%,transparent 58%),linear-gradient(0deg,transparent 42%,#9fb7dd 50%,transparent 58%);}
+.tw-spark.s1{left:39px;top:-6px;}.tw-spark.s2{left:4px;top:34px;width:10px;height:10px;animation-delay:-1s;}.tw-spark.s3{right:2px;top:26px;width:11px;height:11px;animation-delay:-1.9s;}
+@keyframes sparkTw{0%,100%{opacity:0;transform:scale(.3) rotate(0)}45%{opacity:1;transform:scale(1.15) rotate(45deg)}70%{opacity:0;transform:scale(.4) rotate(90deg)}}
+/* luna de "Mi historia" */
+.story-icon svg *{transform-box:fill-box;transform-origin:center;}
+.mo-ring{animation:moRing 30s linear infinite;}
+@keyframes moRing{to{transform:rotate(360deg)}}
+.mo-moon{animation:moSway 6s ease-in-out infinite;}
+@keyframes moSway{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg) translateY(-1.5px)}}
+.mo-star{animation:moStar 2.6s ease-in-out infinite;}
+.mo-star2{animation:moStar 3.4s ease-in-out infinite -1.2s;}
+@keyframes moStar{0%,100%{transform:scale(.6) rotate(0);opacity:.5}50%{transform:scale(1.25) rotate(90deg);opacity:1}}
+
+/* tipografía elegante en datos (sin sans genérica) */
+body{font-variant-numeric:lining-nums;}
+button{font-family:inherit;}
+.c-time,.loc-time,.cd-num,.hero-date,.fecha-line span,.rsvp-pases b,.rsvp-contador-valor,footer .fd,.nf-foot{font-family:var(--caps);font-variant-numeric:lining-nums;}
+.c-time{font-weight:700;font-size:19px;letter-spacing:.06em;}
+.loc-time{font-weight:700;font-size:18px;letter-spacing:.06em;}
+.cd-num{font-weight:600;font-size:30px;}
+.hero-date{font-size:15px;letter-spacing:.1em;}
+.hero-city,.loc-addr,.album-aviso,.cal-box p{font-weight:600;font-size:18px;}
+.cd-lbl,.hero-scroll{font-weight:700;font-size:13px;}
+.btn,.rsvp-btn{font-weight:700;font-size:15px;letter-spacing:.16em;}
+.credit{font-weight:600;font-size:15px;}
+.np-links a{font-weight:700;font-size:12px;}
+.np-menu{font-weight:700;font-size:15px;letter-spacing:.08em;}
+.nf-list a small{font-family:var(--caps);font-weight:600;}
+.dc-fig-label,.dc-avoid{font-weight:700;font-size:16px;}
+.dc-sw{font-weight:700;font-size:15px;}
+.sob-hint,.gal-hint{font-weight:700;font-size:15px;}
+.rsvp-dl{font-weight:700;font-size:18px;}
+.rsvp-toggle-btn{font-weight:700;font-size:17px;}
+.rsvp-pases span,.rsvp-contador-pie{font-family:var(--caps);font-weight:600;}
+#rsvp-feedback{font-weight:600;font-size:18px;}
+.rsvp-editar-btn{font-weight:700;font-size:17px;}
+.rsvp-contador-btn{font-family:var(--serif);font-weight:700;font-size:26px;}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.2s!important;}
   .foil-text,.foil-dark{animation:none!important;background-position:50% 0!important;}
@@ -452,14 +509,11 @@ footer .fd{font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing
 
 <!-- MENÚ -->
 <nav id="navPill" aria-label="Secciones">
-  <a class="np-mono" href="#inicio" aria-label="Inicio">AV</a>
   <div class="np-links" id="npLinks"><span class="np-ind" id="npInd"></span></div>
-  <span class="np-sep"></span>
-  <button class="np-share" id="npShare" type="button" aria-label="Compartir invitación"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg></button>
   <button class="np-menu" id="npMenu" type="button" aria-expanded="false" aria-controls="navFull">&#9776; Menú</button>
 </nav>
 <div id="navFull" aria-hidden="true">
-  <div class="nf-top"><span class="np-mono">AV</span><button class="nf-x" id="nfClose" type="button" aria-label="Cerrar menú">&#10005;</button></div>
+  <div class="nf-top"><span></span><button class="nf-x" id="nfClose" type="button" aria-label="Cerrar menú">&#10005;</button></div>
   <ol class="nf-list" id="nfList"></ol>
   <div class="nf-foot">20 · Diciembre · 2026 &nbsp;·&nbsp; Morelia</div>
 </div>
@@ -487,7 +541,7 @@ footer .fd{font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing
     <div class="ink-bg vflip" aria-hidden="true"><i style="background-image:url(ink/ink-top.webp)"></i></div>
     <div class="fecha-line rv-fade"><i></i><span>20 · 12 · 2026</span><i class="r"></i></div>
     <div class="intro-card rv-card">
-      <img class="intro-tiara" src="./tiara.svg" alt="">
+      <span class="tiara-wrap"><img class="intro-tiara" src="./tiara.svg" alt=""><i class="tw-spark s1"></i><i class="tw-spark s2"></i><i class="tw-spark s3"></i></span>
       <p>Hay noches que se quedan grabadas para siempre, como un cielo lleno de estrellas que no se olvida. Con el corazón lleno de ilusión llega un día que soñé desde niña.</p>
       <p>Quiero que seas parte de esta alegría y que celebremos juntos mis quince años, el comienzo de una nueva etapa llena de sueños por cumplir.</p>
     </div>
@@ -502,7 +556,7 @@ footer .fd{font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing
     <h2 class="sec-title split-title"><span class="w foil-text fix-script">Mi</span> <span class="w foil-text fix-script d1">historia</span></h2>
     <div class="star-div"><i></i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l2.6 7.4L22 11l-7.4 2.6L12 21l-2.6-7.4L2 11l7.4-2.6z"/></svg><i class="r"></i></div>
     <div class="story-card lev rv-card">
-      <div class="story-icon"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M40 12a20 20 0 1 0 12 30A16 16 0 0 1 40 12z"/><path d="M48 14l1.4 3.6L53 19l-3.6 1.4L48 24l-1.4-3.6L43 19l3.6-1.4z"/><circle cx="32" cy="32" r="28" opacity=".35" stroke-dasharray="2 4"/></svg></div>
+      <div class="story-icon"><svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle class="mo-ring" cx="32" cy="32" r="28" opacity=".35" stroke-dasharray="2 4"/><path class="mo-moon" d="M40 12a20 20 0 1 0 12 30A16 16 0 0 1 40 12z"/><path class="mo-star" d="M48 14l1.4 3.6L53 19l-3.6 1.4L48 24l-1.4-3.6L43 19l3.6-1.4z"/><path class="mo-star2" d="M18 18l.8 2 2 .8-2 .8-.8 2-.8-2-2-.8 2-.8z"/></svg></div>
       <p class="story-text">
         <span>Cada etapa de mi vida ha sido como una estrella que se enciende: los primeros pasos, las risas en familia, los vestidos de princesa y los sueños que fui guardando.</span>
         <span>Hoy, quince años después, miro hacia atrás con gratitud por cada persona que ha iluminado mi camino.</span>
@@ -588,11 +642,11 @@ footer .fd{font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing
     <div class="star-div"><i></i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l2.6 7.4L22 11l-7.4 2.6L12 21l-2.6-7.4L2 11l7.4-2.6z"/></svg><i class="r"></i></div>
     <div class="constel" id="constel">
       <div class="constel-line" id="constelLine"></div>
-      <div class="c-item l"><div class="c-star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 8.7l7.1-.6z"/></svg></div><div class="c-txt"><div class="c-time">5:00 p.m.</div><div class="c-ev">Ceremonia religiosa</div></div></div>
-      <div class="c-item r"><div class="c-star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 8.7l7.1-.6z"/></svg></div><div class="c-txt"><div class="c-time">7:00 p.m.</div><div class="c-ev">Recepción</div></div></div>
-      <div class="c-item l"><div class="c-star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 8.7l7.1-.6z"/></svg></div><div class="c-txt"><div class="c-time">8:00 p.m.</div><div class="c-ev">Programa &amp; vals</div></div></div>
-      <div class="c-item r"><div class="c-star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 8.7l7.1-.6z"/></svg></div><div class="c-txt"><div class="c-time">9:00 p.m.</div><div class="c-ev">Cena</div></div></div>
-      <div class="c-item l"><div class="c-star"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 8.7l7.1-.6z"/></svg></div><div class="c-txt"><div class="c-time">1:00 a.m.</div><div class="c-ev">Fin del evento</div></div></div>
+      <div class="c-item l"><div class="c-star"><i class="c-flash" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 8.7l7.1-.6z"/></svg></div><div class="c-txt"><div class="c-time">5:00 p.m.</div><div class="c-ev">Ceremonia religiosa</div></div></div>
+      <div class="c-item r"><div class="c-star"><i class="c-flash" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 8.7l7.1-.6z"/></svg></div><div class="c-txt"><div class="c-time">7:00 p.m.</div><div class="c-ev">Recepción</div></div></div>
+      <div class="c-item l"><div class="c-star"><i class="c-flash" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 8.7l7.1-.6z"/></svg></div><div class="c-txt"><div class="c-time">8:00 p.m.</div><div class="c-ev">Programa &amp; vals</div></div></div>
+      <div class="c-item r"><div class="c-star"><i class="c-flash" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 8.7l7.1-.6z"/></svg></div><div class="c-txt"><div class="c-time">9:00 p.m.</div><div class="c-ev">Cena</div></div></div>
+      <div class="c-item l"><div class="c-star"><i class="c-flash" aria-hidden="true"></i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5l2.9 6.6 7.1.6-5.4 4.7 1.6 7-6.2-3.8-6.2 3.8 1.6-7L2 8.7l7.1-.6z"/></svg></div><div class="c-txt"><div class="c-time">1:00 a.m.</div><div class="c-ev">Fin del evento</div></div></div>
     </div>
   </section>
 
@@ -747,9 +801,8 @@ footer .fd{font-family:var(--sans);font-weight:600;font-size:14px;letter-spacing
 
 <!-- MÚSICA (antes del script) -->
 <audio id="bgAudio" src="https://bsjoelxktbvlavfoozhk.supabase.co/storage/v1/object/public/fotos-clientes/audio/xv-ashley-rocio-vivas-leon/cancion.mp3" preload="none" loop></audio>
-<button class="music-fab" id="musicFab" type="button" aria-label="Música">
-  <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
-  <span class="bars"><i></i><i></i><i></i></span>
+<button class="music-fab" id="musicFab" type="button" aria-label="Reproducir música">
+  <span class="vinyl"><span class="vinyl-label"><span class="vinyl-hole"></span></span></span>
 </button>
 
 <script>
@@ -761,8 +814,8 @@ var audio=document.getElementById('bgAudio'),fab=document.getElementById('musicF
 
 /* ── MÚSICA ── */
 function startMusic(){ if(!audio.paused) return; audio.volume=.75; var p=audio.play(); if(p&&p.catch)p.catch(function(){}); }
-audio.addEventListener('play',function(){fab.classList.add('playing');});
-audio.addEventListener('pause',function(){fab.classList.remove('playing');});
+audio.addEventListener('play',function(){fab.classList.add('playing');fab.setAttribute('aria-label','Pausar música');});
+audio.addEventListener('pause',function(){fab.classList.remove('playing');fab.setAttribute('aria-label','Reproducir música');});
 fab.addEventListener('click',function(){ if(audio.paused){audio.play().catch(function(){});} else audio.pause(); });
 
 /* ── ESTRELLAS PLATEADAS QUE CAEN (un solo canvas) ── */
@@ -876,6 +929,16 @@ function initItinerary(){
     var tl=gsap.timeline({scrollTrigger:{trigger:it,start:'top 82%'}});
     tl.fromTo(it.querySelector('.c-txt'),{x:fromX,opacity:0},{x:0,opacity:1,duration:.9,ease:'power3.out'})
       .fromTo(it.querySelector('.c-star'),{scale:0,rotate:-120},{scale:1,rotate:0,duration:.7,ease:'back.out(2.4)'},'-=.7');
+    /* destello + giro cada vez que la estrella cruza el centro de la pantalla */
+    var star=it.querySelector('.c-star'),fl=it.querySelector('.c-flash');
+    function shine(){
+      gsap.timeline()
+        .fromTo(fl,{opacity:0,scale:.3,rotate:0},{opacity:1,scale:1.15,rotate:45,duration:.35,ease:'power2.out'},0)
+        .to(fl,{opacity:0,scale:1.8,duration:.7,ease:'power2.in'},.35)
+        .fromTo(star,{rotate:0},{rotate:360,duration:1.1,ease:'power3.inOut'},0)
+        .to(star,{scale:1.35,duration:.35,ease:'power2.out',yoyo:true,repeat:1},0);
+    }
+    ScrollTrigger.create({trigger:it,start:'top 58%',end:'bottom 42%',onEnter:shine,onEnterBack:shine});
   });
 }
 
@@ -933,10 +996,6 @@ function initCards(){
   document.getElementById('nfClose').addEventListener('click',closeM);
   list.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;e.preventDefault();closeM();var t=document.getElementById(a.dataset.id);setTimeout(function(){t.scrollIntoView({behavior:'smooth'});},350);});
   links.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;e.preventDefault();document.getElementById(a.dataset.id).scrollIntoView({behavior:'smooth'});});
-  document.getElementById('npShare').addEventListener('click',function(){
-    var data={title:'XV Años de Ashley Rocío',text:'Te invito a mis XV años · 20 de diciembre de 2026',url:location.origin+location.pathname};
-    if(navigator.share)navigator.share(data).catch(function(){});else if(navigator.clipboard)navigator.clipboard.writeText(data.url);
-  });
 })();
 
 /* Confeti con los colores de la invitación */
