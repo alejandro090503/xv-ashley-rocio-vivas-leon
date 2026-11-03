@@ -61,7 +61,9 @@ img{max-width:100%;}
 /* ── SECCIONES + 2 · FUNDIDOS ── */
 section,footer{position:relative;isolation:isolate;padding:84px 24px;}
 .sec-light{background:var(--bg);}
-.sec-dark{background:var(--night);}
+.sec-dark{background:var(--night);padding-top:170px;padding-bottom:170px;}
+#cierre{padding-bottom:84px;}
+#cuenta{min-height:100vh;}
 .fade-top::before,.fade-bot::after{content:'';position:absolute;left:0;right:0;z-index:-1;pointer-events:none;}
 .fade-top::before{top:0;height:var(--fth,170px);background:var(--ft);}
 .fade-bot::after{bottom:0;height:var(--fbh,170px);background:var(--fb);}
@@ -74,7 +76,7 @@ section,footer{position:relative;isolation:isolate;padding:84px 24px;}
 .lev.l2{animation-delay:-2.2s}.lev.l3{animation-delay:-4.1s}
 
 /* ── SOBRE ── */
-#envelope-screen{position:fixed;inset:0;z-index:10000;overflow:hidden;cursor:pointer;opacity:0;background:#fff;touch-action:manipulation;}
+#envelope-screen{position:fixed;inset:0;z-index:10000;overflow:hidden;cursor:pointer;background:#E7EEFB;touch-action:manipulation;}
 #env-image,#env-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.18);}
 #env-image{z-index:2;}#env-video{z-index:3;opacity:0;}
 #env-flash{position:fixed;inset:0;background:#fff;z-index:9999;opacity:0;pointer-events:none;}
@@ -94,7 +96,7 @@ section,footer{position:relative;isolation:isolate;padding:84px 24px;}
 .hero-sheen{position:absolute;inset:0;z-index:-2;mix-blend-mode:soft-light;pointer-events:none;overflow:hidden;}
 .hero-sheen::before{content:'';position:absolute;top:-20%;bottom:-20%;left:-60%;width:60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55) 50%,transparent);animation:sheen 9s ease-in-out infinite;}
 @keyframes sheen{0%{transform:translateX(0) skewX(-12deg)}55%,100%{transform:translateX(330%) skewX(-12deg)}}
-.hero-veil{position:absolute;left:0;right:0;bottom:0;height:72%;z-index:-2;pointer-events:none;background:linear-gradient(to top,rgba(8,18,46,.92) 0%,rgba(8,18,46,.72) 38%,rgba(8,18,46,.32) 70%,rgba(8,18,46,0) 100%);}
+.hero-veil{position:absolute;left:0;right:0;bottom:0;height:72%;z-index:-2;pointer-events:none;background:linear-gradient(to top,#F2F6FF 0,rgba(242,246,255,.55) 40px,rgba(8,18,46,.88) 150px,rgba(8,18,46,.72) 45%,rgba(8,18,46,.32) 75%,rgba(8,18,46,0) 100%);}
 .hero-content{position:relative;text-align:center;padding:0 22px 200px;color:var(--on-dark);}
 .hero-eyebrow{font-family:var(--caps);font-weight:600;font-size:13px;letter-spacing:.42em;text-transform:uppercase;color:var(--on-dark);padding-left:.42em;text-shadow:0 2px 14px rgba(0,0,0,.6);}
 .hero-name{font-family:var(--script);font-weight:400;font-size:clamp(96px,28vw,128px);line-height:1.25;margin:4px 0 0;}
@@ -500,7 +502,7 @@ button{font-family:inherit;}
 
 <!-- SOBRE -->
 <div id="envelope-screen" role="button" aria-label="Toca para abrir tu invitación">
-  <img id="env-image" src="./sobre.png" alt="Invitación XV Años de Ashley Rocío">
+  <img id="env-image" src="./sobre.jpg" alt="Invitación XV Años de Ashley Rocío">
   <video id="env-video" src="./sobre-apertura.mp4" playsinline webkit-playsinline muted preload="auto"></video>
   <p class="envelope-hint" id="env-hint">Toca para abrir</p>
 </div>
@@ -521,7 +523,7 @@ button{font-family:inherit;}
 <div class="wrap" id="page" style="visibility:hidden">
 
   <!-- PORTADA -->
-  <section id="inicio" data-nav="Inicio" data-top="#0B1A3F" data-bot="#0b1a3f">
+  <section id="inicio" data-nav="Inicio" data-top="#0B1A3F" data-bot="#F2F6FF">
     <div class="hero-bg" id="heroBg"><i class="hero-drift"></i></div>
     <div class="hero-sheen" aria-hidden="true"></div>
     <div class="hero-veil" aria-hidden="true"></div>
@@ -588,7 +590,7 @@ button{font-family:inherit;}
   </section>
 
   <!-- CUENTA REGRESIVA -->
-  <section id="cuenta" class="sec-dark on-dark" data-nav="Cuenta" data-top="#13285e" data-bot="#13285e">
+  <section id="cuenta" class="sec-dark on-dark" data-nav="Cuenta" data-top="#F2F6FF" data-bot="#F2F6FF">
     <div class="cd-bg"><i></i></div>
     <div class="cd-veil"></div>
     <div class="cd-pre"><span class="foil-dark fix-script">Tan sólo faltan</span></div>
@@ -634,7 +636,7 @@ button{font-family:inherit;}
   </section>
 
   <!-- ITINERARIO EN ESTRELLAS -->
-  <section id="programa" class="sec-dark on-dark" data-nav="Programa">
+  <section id="programa" class="sec-dark on-dark" data-nav="Programa" data-top="#F2F6FF" data-bot="#F2F6FF">
     <div class="sky-paint" aria-hidden="true"></div>
     <div class="sky-dots" aria-hidden="true"></div>
     <div class="eyebrow">Programa de la noche</div>
@@ -733,7 +735,7 @@ button{font-family:inherit;}
 </div>
 
   <!-- ÁLBUM -->
-  <section id="album" class="sec-dark on-dark" data-nav="Álbum">
+  <section id="album" class="sec-dark on-dark" data-nav="Álbum" data-top="#F2F6FF" data-bot="#F2F6FF">
     <div class="album-paint" aria-hidden="true"></div>
     <div class="eyebrow">Comparte tus fotos</div>
     <h2 class="sec-title split-title"><span class="w foil-dark fix-script">Álbum</span> <span class="w foil-dark fix-script d2">de</span> <span class="w foil-dark fix-script d3">fotos</span></h2>
@@ -785,7 +787,7 @@ button{font-family:inherit;}
 </section>
 
   <!-- CIERRE -->
-  <section id="cierre" class="sec-dark on-dark" data-top="#14295f" data-bot="#0B1A3F">
+  <section id="cierre" class="sec-dark on-dark" data-top="#F2F6FF" data-bot="#0B1A3F">
     <div class="close-bg"><i></i></div>
     <div class="close-veil"></div>
     <p class="close-txt rv-fade">Con mucha ilusión te espero para compartir esta noche tan especial. Tu presencia hará de mis XV años un recuerdo lleno de luz.</p>
@@ -841,7 +843,7 @@ var Stars=(function(){
 (function(){
   var scr=document.getElementById('envelope-screen'),img=document.getElementById('env-image'),vid=document.getElementById('env-video'),flash=document.getElementById('env-flash'),hint=document.getElementById('env-hint');
   var opened=false,ready=false,flashed=false;
-  gsap.timeline().to(scr,{opacity:1,duration:1.1,ease:'power2.out',delay:.2}).to(hint,{opacity:1,duration:.8},'-=.4');
+  gsap.timeline().fromTo(img,{opacity:0},{opacity:1,duration:1.1,ease:'power2.out',delay:.2}).to(hint,{opacity:1,duration:.8},'-=.4');
   if(!REDUCED)gsap.to(img,{scale:1.2,duration:2.2,ease:'sine.inOut',repeat:-1,yoyo:true,delay:1.4});
   function prepare(){if(ready)return;ready=true;scr.style.display='none';document.getElementById('page').style.visibility='visible';launch();}
   function reveal(){prepare();gsap.to(flash,{opacity:0,duration:1.2,ease:'power2.out',onComplete:function(){flash.style.display='none';}});}
