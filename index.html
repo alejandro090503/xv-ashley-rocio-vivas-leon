@@ -504,6 +504,10 @@ button{font-family:inherit;}
 .dc-pips i{width:7px;height:7px;border-radius:50%;background:rgba(30,58,138,.22);transition:background .4s,transform .4s;}
 .dc-pips i.on{background:var(--sapphire);transform:scale(1.3);}
 
+.sob-star{position:fixed;z-index:9000;pointer-events:none;background:linear-gradient(135deg,#FFFFFF,#C0C0C0 55%,#8E9091);
+  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);filter:drop-shadow(0 0 6px rgba(116,167,255,.8));}
+.close-motto{position:relative;margin-top:6px;font-family:var(--caps);font-weight:600;font-size:16px;letter-spacing:.42em;padding-left:.42em;text-transform:uppercase;color:#E6ECF5;text-shadow:0 2px 12px rgba(0,0,0,.6);}
+
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.2s!important;}
   .foil-text,.foil-dark{animation:none!important;background-position:50% 0!important;}
@@ -681,7 +685,7 @@ button{font-family:inherit;}
       <figcaption class="dc-fig-label">Damas</figcaption>
     </figure>
   </div>
-  <p class="dc-avoid">Colores reservados para la quinceañera</p>
+  <p class="dc-avoid">Cualquier tonalidad de vestido azul queda reservada para la quinceañera</p>
   <div class="dc-one" id="dcOne" aria-live="polite">
     <span class="dc-dot dc-big"><span class="dc-fill" id="dcFill" style="background:#CBF0FF"></span></span>
     <span class="dc-name" id="dcName">Azul hielo</span>
@@ -723,7 +727,7 @@ button{font-family:inherit;}
     <div class="sob-open-content" id="sobContent" aria-live="polite">
       <svg class="sob-mailbox" viewBox="0 0 52 52" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="8" y="22" width="36" height="24" rx="5"/><path d="M8 30 Q26 38 44 30"/><rect x="18" y="8" width="16" height="16" rx="2"/><path d="M18 8 Q26 3 34 8"/></svg>
       <p class="sob-title">Tu presencia es mi mejor regalo</p>
-      <p class="sob-desc">Si deseas tener un detalle conmigo, el día de la fiesta habrá un buzón para tus sobres.</p>
+      <p class="sob-desc">Si deseas tener un detalle conmigo, puedes sorprenderme con el regalo de tu preferencia, o bien, habrá una lluvia de sobres el día del evento.</p>
     </div>
   </div>
 </section>
@@ -803,6 +807,7 @@ button{font-family:inherit;}
     <div class="close-veil"></div>
     <p class="close-txt rv-fade">Con mucha ilusión te espero para compartir esta noche tan especial. Tu presencia hará de mis XV años un recuerdo lleno de luz.</p>
     <div class="close-sign"><span class="foil-dark fix-script">Ashley</span></div>
+    <div class="close-motto">Simply Lovely</div>
   </section>
 
   <footer data-top="#0B1A3F" data-bot="#0B1A3F">
@@ -930,6 +935,7 @@ function initReveals(){
   /* álbum: el QR sube */
   gsap.fromTo('.album-qr',{y:40,opacity:0},{y:0,opacity:1,duration:1*D,ease:'power3.out',scrollTrigger:{trigger:'.album-qr',start:'top 88%'}});
   /* cierre: firma */
+  gsap.fromTo('.close-motto',{opacity:0,y:12,letterSpacing:'.8em'},{opacity:1,y:0,letterSpacing:'.42em',duration:1.6*D,ease:'power3.out',delay:.4,scrollTrigger:{trigger:'.close-sign',start:'top 90%'}});
   gsap.fromTo('.close-sign',{scale:REDUCED?1:.85,opacity:0},{scale:1,opacity:1,duration:1.4*D,ease:'power3.out',scrollTrigger:{trigger:'.close-sign',start:'top 90%'}});
 }
 
@@ -1114,6 +1120,24 @@ function confetti(){
       land();
     }
 
+    /* estrellas plateadas que salen del sobre al abrirlo */
+    function sobStars(){
+      if (RM || !HAS) return;
+      var r = body.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height * .45;
+      for (var k = 0; k < 26; k++){
+        var st = document.createElement('i'); st.className = 'sob-star';
+        var sz = 8 + Math.random() * 14; st.style.width = st.style.height = sz + 'px';
+        st.style.left = (cx - sz / 2) + 'px'; st.style.top = (cy - sz / 2) + 'px';
+        document.body.appendChild(st);
+        var a = -Math.PI / 2 + (Math.random() - .5) * 2.6, d = 90 + Math.random() * 190;
+        (function(st){
+          gsap.timeline({ onComplete: function(){ st.remove(); } })
+            .fromTo(st, { x: 0, y: 0, scale: .2, rotate: 0, opacity: 1 },
+              { x: Math.cos(a) * d, y: Math.sin(a) * d, scale: 1, rotate: Math.random() * 300, duration: .9 + Math.random() * .5, ease: 'power3.out' })
+            .to(st, { opacity: 0, y: '+=40', duration: .8, ease: 'power1.in' }, '-=.25');
+        })(st);
+      }
+    }
     function toggle(e){
       if (e) e.preventDefault();
       land(function(){
@@ -1122,6 +1146,7 @@ function confetti(){
         btn.setAttribute('aria-label', open ? 'Sobre abierto: toca para cerrar' : 'Sobre: toca para abrir');
         body.classList.toggle('sob-landed', !open);
         hint.textContent = open ? 'Toca para cerrar' : 'Toca para abrir';
+        if (open) sobStars();
       });
     }
     btn.addEventListener('click', toggle);
