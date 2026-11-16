@@ -1173,10 +1173,17 @@ function confetti(){
       { src: 'historia-6.jpg', pos: '50% 50%' },
       { src: 'historia-7.jpg', pos: '85% 50%' },
       { src: 'historia-8.jpg', pos: '50% 30%' },
-      { src: 'historia-9.jpg', pos: '55% 40%' }
+      { src: 'historia-9.jpg', pos: '55% 40%' },
+      { src: 'historia-10.jpg', pos: '50% 55%' },
+      { src: 'historia-11.jpg', pos: '75% 55%' },
+      { src: 'historia-12.jpg', pos: '60% 50%' },
+      { src: 'historia-13.jpg', pos: '50% 80%' },
+      { src: 'historia-14.jpg', pos: '50% 50%' },
+      { src: 'historia-15.jpg', pos: '55% 70%' },
+      { src: 'historia-16.jpg', pos: '50% 30%' }
     ];
     var ALT = 'Ashley de niña';
-    var n = PH.length, radius = 250;
+    var n = PH.length, radius = Math.max(250, Math.round(n * 200 / (2 * Math.PI)));
     PH.forEach(function(p, i){
       var c = document.createElement('div');
       c.className = 'gal-card';
