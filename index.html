@@ -767,7 +767,7 @@ button{font-family:inherit;}
   <p class="eyebrow">R.S.V.P.</p>
   <h2 class="sec-title split-title" id="rsvp-title"><span class="w foil-text fix-script d1">Confirma</span> <span class="w foil-text fix-script d2">tu</span> <span class="w foil-text fix-script d3">asistencia</span></h2>
   <div class="star-div"><i></i><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 1l2.6 7.4L22 11l-7.4 2.6L12 21l-2.6-7.4L2 11l7.4-2.6z"/></svg><i class="r"></i></div>
-  <p class="rsvp-dl">Confirma antes del 13 de diciembre de 2026</p>
+  <p class="rsvp-dl">Confirma antes del 5 de diciembre de 2026</p>
   <div class="rsvp-card">
     <div id="rsvp-head" style="display:none">
       <p class="rsvp-guest-lbl">Esta invitación es para</p>
@@ -1268,7 +1268,7 @@ function confetti(){
     if (initRSVP.done) return; initRSVP.done = true;
     var PANEL_API = 'https://panel-invitados.vercel.app/api/confirmar';
     var RSVP_URL = 'https://xv-ashley-rocio-vivas-leon.vercel.app';
-    var DEADLINE = new Date('2026-12-13T23:59:59-06:00');
+    var DEADLINE = new Date('2026-12-05T23:59:59-06:00');
     var frozen = Date.now() > DEADLINE.getTime();
     var ERR = '#A3311F';
     var $ = function(id){ return document.getElementById(id); };
